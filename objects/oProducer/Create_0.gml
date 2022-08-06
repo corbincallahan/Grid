@@ -9,6 +9,7 @@ function select(game) {
 		return false;
 	}
 	var connReal = gridToReal(game, connCoord[0], connCoord[1]);
+	audio_sound_pitch(snConn, .5);
 	var conn = instance_create_layer(connReal[0], connReal[1], "Connections", oConnection);
 	conns[facing] = conn;
 	conn.from = flip(facing);
@@ -21,6 +22,9 @@ function select(game) {
 	game.grid[connCoord[0]][connCoord[1]] = conn;
 	game.cursorX = connCoord[0];
 	game.cursorY = connCoord[1];
+	
+	conn.length = 0;
+	
 	return true;
 }
 

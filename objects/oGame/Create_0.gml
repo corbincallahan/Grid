@@ -18,6 +18,8 @@ selected = noone;
 
 grid = noone;
 
+errorMsg = "";
+
 function moveCursorTo(_x, _y, dir) {
 	if(!isOnGrid(id, _x, _y)) {
 		audio_play_sound(snHurt, 0, false);
@@ -39,6 +41,7 @@ function moveCursorTo(_x, _y, dir) {
 		selected.makingOut = false;
 		
 		var createAt = gridToReal(id, _x, _y);
+		audio_sound_pitch(snConn, .5);
 		selected.conns[dir] = instance_create_layer(createAt[0], createAt[1], "Connections", oConnection);
 		selected.conns[dir].from = flip(dir);
 		selected.conns[dir].updateSprite();
@@ -52,6 +55,7 @@ function moveCursorTo(_x, _y, dir) {
 		var last = grid[cursorX][cursorY];
 		
 		if(dir == last.from && !next.isNode) {
+			last.silenced = true;
 			instance_destroy(last);
 			
 			cursorX = _x;
@@ -59,6 +63,9 @@ function moveCursorTo(_x, _y, dir) {
 			
 			next.to = -1;
 			next.updateSprite();
+			
+			audio_sound_pitch(snConn, next.pitch);
+			audio_play_sound(snConn, 0, false);
 			
 			return;
 		}
@@ -92,6 +99,7 @@ function moveCursorTo(_x, _y, dir) {
 		last.updateSprite();
 		
 		var createAt = gridToReal(id, _x, _y);
+		audio_sound_pitch(snConn, last.pitch + .25);
 		last.next = instance_create_layer(createAt[0], createAt[1], "Connections", oConnection);
 		last.next.from = (dir + 2) % 4;
 		last.next.parNode = last.parNode;
@@ -99,6 +107,7 @@ function moveCursorTo(_x, _y, dir) {
 		last.next.amount = last.amount;
 		last.next.color = last.color;
 		last.next.updateSprite();
+		last.next.pitch = last.pitch + .25;
 		grid[_x][_y] = last.next;
 	}
 	

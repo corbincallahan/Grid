@@ -11,7 +11,7 @@
     "path": "audiogroups/audiogroup_default",
   },
   "soundFile": "snMove.wav",
-  "duration": 0.193322,
+  "duration": 0.188322,
   "parent": {
     "name": "Sounds",
     "path": "folders/Sounds.yy",

@@ -11,6 +11,13 @@ parDir = -1;
 
 isNode = false;
 
+destroyTimer = -1;
+
+pitch = .5;
+silenced = false;
+
+audio_play_sound(snConn, 0, false);
+
 function updateSprite() {
 	if(to == -1) {
 		image_index = from;
@@ -53,4 +60,14 @@ function refresh(dir) {
 		next.color = color;
 	}
 	next.refresh(flip(to));
+}
+
+function checkLoop(in) {
+	if(in == id) {
+		return true;
+	}
+	if(instance_exists(next)) {
+		return next.checkLoop(in)
+	}
+	return false;
 }

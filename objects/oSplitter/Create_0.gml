@@ -9,6 +9,7 @@ makingOut = false;
 function select(game) {
 	if(numOut == 3) {
 		makeError(id, "All Outputs Used");
+		audio_play_sound(snHurt, 0, false);
 		return false;
 	}
 	makingOut = true;
@@ -20,8 +21,18 @@ function blocking(dir) {
 }
 
 function addInput(in, dir) {
-	if(in.color != color && color != 2) {
+	if(checkLoop(in)) {
+		makeError(in, "No loops!");
+		audio_play_sound(snHurt, 0, false);
+		return false;
+	}
+	if(in.color == 2 && color != 2) {
+		in.parNode.color = color;
+		in.parNode.refresh();
+	}
+	else if(in.color != color && color != 2) {
 		makeError(id, "Wrong Color");
+		audio_play_sound(snHurt, 0, false);
 		return false;
 	}
 	
@@ -39,8 +50,14 @@ function refresh(dir) {
 	}
 	
 	if(instance_exists(conns[facing])) {
-		amount = conns[facing].amount;
-		color = conns[facing].color;
+		if(conns[facing].color != 2) {
+			amount = conns[facing].amount;
+			color = conns[facing].color;
+		}
+		else if(color != 2) {
+			conns[facing].parNode.color = color;
+			conns[facing].parNode.refresh();
+		}
 	}
 	else {
 		amount = 0;
@@ -65,4 +82,15 @@ function findNumOut() {
 			numOut++;
 		}
 	}
+}
+
+function checkLoop(in) {
+	for(var i = 0; i < 4; i++) {
+		if(i != facing && instance_exists(conns[i])) {
+			if(conns[i].checkLoop(in)) {
+				return true;
+			}
+		}
+	}
+	return false;
 }

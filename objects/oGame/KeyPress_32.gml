@@ -1,7 +1,9 @@
 var item = grid[cursorX][cursorY];
 
 if(selecting) {
-	audio_play_sound(snHurt, 0, false);
+	if(selected.isSplitter) {
+		audio_play_sound(snHurt, 0, false);
+	}
 	selecting = false;
 	if(item.isNode && item.isSplitter) {
 		item.makingOut = false;
@@ -13,8 +15,11 @@ if(selecting) {
 }
 
 if(item != 0 && instance_exists(item)) {
+	audio_sound_pitch(snConn, .5);
 	if(item.select(id)) {
-		audio_play_sound(snSelect, 0, false);
+		if(item.isSplitter) {
+			audio_play_sound(snSelect, 0, false);
+		}
 		selecting = true;
 		selected = item;
 	}

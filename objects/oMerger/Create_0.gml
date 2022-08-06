@@ -33,9 +33,19 @@ function blocking(dir) {
 }
 
 function addInput(in, dir) {
+	if(checkLoop(in)) {
+		makeError(in, "No loops!");
+		audio_play_sound(snHurt, 0, false);
+		return false;
+	}
 	if(in.color != color) {
-		if(color != 2) {
+		if(in.color == 2) {
+			in.parNode.color = color;
+			in.parNode.refresh(in.parDir);
+		}
+		else if(color != 2) {
 			makeError(id, "Wrong Color");
+			audio_play_sound(snHurt, 0, false);
 			return false;
 		}
 		color = in.color;
@@ -53,6 +63,11 @@ function refresh(dir) {
 		if(i != facing && instance_exists(curr)) {
 			amount += curr.amount;
 			numConn++;
+			
+			if(curr.color == 2 && color != 2) {
+				curr.parNode.color = color;
+				curr.parNode.refresh();
+			}
 		}
 	}
 	if(instance_exists(conns[facing])) {
@@ -64,4 +79,11 @@ function refresh(dir) {
 	if(numConn == 0) {
 		color = 2;
 	}
+}
+
+function checkLoop(in) {
+	if(instance_exists(conns[facing])) {
+		return conns[facing].checkLoop(in);
+	}
+	return false;
 }

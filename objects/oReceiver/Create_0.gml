@@ -24,6 +24,7 @@ function addInput(in, dir) {
 		}
 		else {
 			makeError(id, "Wrong color");
+			audio_play_sound(snHurt, 0, false);
 			return false;
 		}
 	}
@@ -42,4 +43,8 @@ function refresh(dir) {
 	checkWin();
 	var satisfied = receiving == amount;
 	image_index = satisfied * 8 + color * 4 + facing;
+}
+
+function checkLoop(in) {
+	return false;
 }

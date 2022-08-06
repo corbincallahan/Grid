@@ -11,7 +11,7 @@
     "path": "audiogroups/audiogroup_default",
   },
   "soundFile": "snHurt.wav",
-  "duration": 0.202166,
+  "duration": 0.197166,
   "parent": {
     "name": "Sounds",
     "path": "folders/Sounds.yy",

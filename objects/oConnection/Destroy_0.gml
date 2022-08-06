@@ -5,11 +5,15 @@ if(instance_exists(next)) {
 		next.destroyConn(flip(to));
 	}
 	else {
-		instance_destroy(next);
+		next.destroyTimer = 2;
 	}
 }
 
 var game = oGame;
 var coord = realToGrid(game, x, y);
 game.grid[coord[0]][coord[1]] = 0;
-instance_destroy();
+
+if(!silenced) {
+	audio_sound_pitch(snConn, pitch);
+	audio_play_sound(snConn, pitch, false);
+}

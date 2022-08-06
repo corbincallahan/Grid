@@ -10,14 +10,14 @@
     "name": "audiogroup_default",
     "path": "audiogroups/audiogroup_default",
   },
-  "soundFile": "snSelect.wav",
-  "duration": 0.188322,
+  "soundFile": "snConn.wav",
+  "duration": 0.197166,
   "parent": {
     "name": "Sounds",
     "path": "folders/Sounds.yy",
   },
   "resourceVersion": "1.0",
-  "name": "snSelect",
+  "name": "snConn",
   "tags": [],
   "resourceType": "GMSound",
 }

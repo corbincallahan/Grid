@@ -1,0 +1,1 @@
+moveCursorTo(cursorX, cursorY + 1, down);
